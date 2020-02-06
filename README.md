@@ -1,2 +1,1 @@
-# Typescript_sample
-Learning fundamentals of typescript
+# Typescript_sample_with_React
