@@ -2,7 +2,7 @@ import * as React from "react";
 
 interface HomeProps {
     name: string;
-    time?: number;
+    time: number;
 }
 interface HomeState {
     data: Array<any>;

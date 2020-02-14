@@ -1,6 +1,11 @@
-import { createStore, Store} from 'redux';
 import { rootReducer, RootState } from './rootReducer';
+import { Store, createStore } from 'redux';
 
-export const configureStore = () => {
-  return createStore(rootReducer as any) as Store<RootState>;
+export function configureStore(initialState?: RootState): Store<RootState> {
+
+  const store = createStore(rootReducer as any, initialState as any) as Store<
+    RootState
+  >;
+
+  return store;
 }
