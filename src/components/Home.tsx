@@ -1,17 +1,36 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { LanguageTypes } from "../../redux/actionTypes/language";
+import { getLanguages } from "../../redux/actionCreators/languageAction";
+import { RootState } from "../../redux/rootReducer";
 
 interface HomeProps {
     name: string;
     time: number;
 }
+
+
+interface IStateProps {
+    Languages?: object,
+}
+
+interface IDispatchProps {
+    getLanguages: any;
+}
+
 interface HomeState {
     data: Array<any>;
 }
 
-export class Home extends React.Component<HomeProps, HomeState> {
+type Props = HomeProps & IStateProps & IDispatchProps;
 
-    constructor (props: HomeProps) {
+class _Home extends React.Component<Props, HomeState> {
+
+    constructor (props: Props) {
         super (props);
+        console.log(props);
+        props.getLanguages();
         this.state = { data: []};
         fetch('https://www.justdial.com/api/india_api_read/language_selector.php?wap=2&sid=8eKh0hv28niiJ%252BhsgvIn2IyOhxBRNlOAuQcwo6RL%252BdY%253D&source=2')
             .then((res) => {
@@ -23,6 +42,12 @@ export class Home extends React.Component<HomeProps, HomeState> {
                     });
                 })
             });
+    }
+
+    componentDidMount() {}
+
+    componentWillReceiveProps (nprops: HomeProps) {
+        console.log('nprops', nprops);
     }
     
     public render() {
@@ -41,3 +66,13 @@ export class Home extends React.Component<HomeProps, HomeState> {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<LanguageTypes>): IDispatchProps => ({
+    getLanguages: () => dispatch(getLanguages()) 
+})
+
+const mapStateToProps = (store: RootState): IStateProps => ({
+    Languages: store.language
+})
+
+export const Home =  connect <IStateProps, IDispatchProps, HomeProps, RootState> (mapStateToProps, mapDispatchToProps)(_Home);
