@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { LanguageTypes } from "../../redux/actionTypes/language";
+import { LanguageTypes, LanguageData } from "../../redux/actionTypes/language";
 import { getLanguages } from "../../redux/actionCreators/languageAction";
 import { RootState } from "../../redux/rootReducer";
 
@@ -12,7 +12,7 @@ interface HomeProps {
 
 
 interface IStateProps {
-    Languages?: object,
+    Languages?: LanguageData,
 }
 
 interface IDispatchProps {
@@ -59,6 +59,11 @@ class _Home extends React.Component<Props, HomeState> {
                 </div>
                 <div>
                     {data && data.length > 0 && data.map((item) => (
+                        <div>{item.lang}</div>
+                    ))}
+                </div>
+                <div>
+                    {this.props.Languages && this.props.Languages.data.length > 0 && this.props.Languages.data.map((item) => (
                         <div>{item.lang}</div>
                     ))}
                 </div>
